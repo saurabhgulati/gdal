@@ -20,7 +20,7 @@ module Gdal
     def convert_to_png
       # if Gdal.check_tool("gdal_translate")
       new_path = "#{get_file_path}/#{get_file_name}.png"
-      resp = `gdal_translate -of PNG #{self.path}  #{new_path}`
+      resp = `gdal_translate -of PNG -ot Byte #{self.path}  #{new_path}`
       return Gdal::Translate.new(
         path: self.path,
         converted_path: new_path,
@@ -29,8 +29,8 @@ module Gdal
       # end
     end
 
-    def srcwin x0, y0, xsize, ysize, file_name=nil
-      new_path = "#{get_file_path}/#{file_name || get_file_name}.#{Gdal::Translate::FILE_EXT_PER_DRIVER[self.output_format.downcase]}"
+    def srcwin x0, y0, xsize, ysize, file_name: nil, file_path: nil
+      new_path = "#{file_path || get_file_path}/#{file_name || get_file_name}.#{Gdal::Translate::FILE_EXT_PER_DRIVER[self.output_format.downcase]}"
       resp = `gdal_translate -srcwin #{x0} #{y0} #{xsize} #{ysize} -of #{self.output_format} #{self.path} #{new_path}`
       return Gdal::Translate.new(
         path: self.path,

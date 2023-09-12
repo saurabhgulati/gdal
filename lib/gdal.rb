@@ -2,7 +2,7 @@ require "gdal/railtie"
 
 module Gdal
   # Your code goes here...
-  VALID_TOOLS = %w(gdalinfo gdal_translate)
+  VALID_TOOLS = %w(gdalinfo gdal_translate gdal2tiles.py)
 
   def self.check_tool tool
     if Gdal::VALID_TOOLS.include?(tool)
@@ -14,7 +14,9 @@ module Gdal
     end
   end
 
+  require "open3"
   require "gdal/image"
   require "gdal/info"
   require "gdal/translate"
+  require "gdal/tile"
 end
