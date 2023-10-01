@@ -14,7 +14,7 @@ module Gdal
 
     def self.get_coordinates path
       if Gdal.check_tool("gdalinfo")
-        if File.exists?(path)
+        if File.exist?(path)
           info = `gdalinfo -json #{path}`
           info = JSON.parse(info)
           coords = info["wgs84Extent"]["coordinates"][0]
